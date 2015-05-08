@@ -1,3 +1,4 @@
+from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
 import atexit
 
 class MotorStates():
@@ -38,8 +39,6 @@ class BrailleStepper():
 
 		# initalize hardward only if its in production
 		if not debug:
-			from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
-
 			# hardware related config
 			self.motorHAT = Adafruit_MotorHAT()
 			self.stepper = self.motorHAT.getStepper(stesPerRev, onPort)
