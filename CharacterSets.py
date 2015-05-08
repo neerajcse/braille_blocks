@@ -20,14 +20,14 @@ class CharacterSetMapper():
 	def getLeftConfig(self, char):
 		print("CharSet: Getting info for left")
 		c = char.lower()
-		num = self.mappings.get(c, 0)
+		num = self.mappings.[c]
 		num = int(num/10)
 		return num
 
 	def getRightConfig(self, char):
 		print("CharSet: Getting info for right")
 		c = char.lower()
-		num = self.mappings.get(c, 0)
+		num = self.mappings[c]
 		num = num%10
 		return num
 
