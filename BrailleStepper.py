@@ -1,6 +1,4 @@
-import threading
-
-from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+import atexit
 
 class MotorStates():
 	NO_PINS_000 = 0
@@ -24,15 +22,29 @@ class BrailleWheel():
 						MotorStates.TWO_PIN_011,
 					]
 
-class BrailleStepper(threading.Thread):
 
-	def __init__(self, stesPerRev, onPort, atI2CAddress,
-		side, brailleWheel, debug=True):
-		# hardware related config
-		self.motorHAT = Adafruit_MotorHAT()
-		self.stepper = self.motorHAT.getStepper(stesPerRev, onPort)
-		self.stepper.setSpeed(15)
-		
+class BrailleStepper():
+	def __init__(self,
+		brailleWheel, 
+		stesPerRev=4076,
+		onPort=1,
+		atI2CAddres=0x60,
+		debug=True):
+
+		# register destruction steps
+		atexit.register(self.turnOffMotors)
+
+		self.debug = debug
+
+		# initalize hardward only if its in production
+		if not debug:
+			from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+
+			# hardware related config
+			self.motorHAT = Adafruit_MotorHAT()
+			self.stepper = self.motorHAT.getStepper(stesPerRev, onPort)
+			self.stepper.setSpeed(15)
+			
 		# motor related config
 		self.STEPS_FOR_45_DEGREES = 509.5
 		
@@ -50,11 +62,25 @@ class BrailleStepper(threading.Thread):
 		indexDiff = goToIndex - currentIndex
 		if indexDiff < 0:
 			indexDiff = 8 + indexDiff
+		print("Current:{}, To: {}, Diff: {}".format(currentIndex, goToIndex, indexDiff))
+		
+		# make sure that last leftover (i.e 0.5) is added if it exists.
 		stepsToTake = (indexDiff * self.STEPS_FOR_45_DEGREES) + self.leftOverFromLastStep
 		
+		# update internal state
 		self.leftOverFromLastStep = stepsToTake%1
-		stepsToTake = stepsToTake - self.leftOverFromLastStep
+		self.state = toState
 
-		if not debug:
+		# recalculate stepsToTake to maintain accuracy.
+		stepsToTake = stepsToTake - self.leftOverFromLastStep
+		print("BrailleStepper: Taking {0} 45 degree state changes equalling {1} steps taken".format(indexDiff, stepsToTake))
+		if not self.debug:
 			self.stepper.step(stepsToTake, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
-		print("BrailleStepper: Taking {1} 45 degree state changes equalling {2} steps taken".format(indexDiff, stepsToTake))
+		
+
+	def turnOffMotors(self):
+		if not self.debug:
+			for i in range(1,5):
+				self.motorHAT.getMotor(i).run(Adafruit_MotorHAT.RELEASE)
+		else:
+			print("Turning off motors")
