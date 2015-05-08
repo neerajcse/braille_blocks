@@ -6,7 +6,7 @@ import time
 import atexit
 
 # create a default object, no changes to I2C address or frequency
-mh = Adafruit_MotorHAT()
+mh = Adafruit_MotorHAT(addr=0x70)
 
 # recommended for auto-disabling motors on shutdown!
 def turnOffMotors():
@@ -17,22 +17,22 @@ def turnOffMotors():
 
 atexit.register(turnOffMotors)
 
-myStepper = mh.getStepper(200, 2)  	# 200 steps/rev, motor port #1
-myStepper.setSpeed(30)  		# 30 RPM
+myStepper = mh.getStepper(4076, 2)  	# 200 steps/rev, motor port #1
+myStepper.setSpeed(15)  		# 30 RPM
 
-while (True):
-	print("Single coil steps")
-	myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
-	myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 
-	print("Double coil steps")
-	myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
-	myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
+print("Single coil steps")
+myStepper.step(509, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
+#myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 
-	print("Interleaved coil steps")
-	myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
-	myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.INTERLEAVE)
+#print("Double coil steps")
+#myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.DOUBLE)
+#myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.DOUBLE)
 
-	print("Microsteps")
-        myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
-        myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.MICROSTEP)
+#print("Interleaved coil steps")
+#myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.INTERLEAVE)
+#myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.INTERLEAVE)
+
+#print("Microsteps")
+#myStepper.step(100, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.MICROSTEP)
+#myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.MICROSTEP)
