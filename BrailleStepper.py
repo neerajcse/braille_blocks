@@ -38,7 +38,7 @@ class BrailleStepper():
 
 		# initalize hardward only if its in production
 		if not debug:
-			self.stepper = ULNStepper(in1=onPort[0], in2=onPort[1], in3=onPort[2], in4=onPort[4])
+			self.stepper = ULNStepper(in1=onPort[0], in2=onPort[1], in3=onPort[2], in4=onPort[3])
 			#self.stepper.setSpeed(15)
 			
 		# motor related config
