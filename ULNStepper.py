@@ -7,7 +7,7 @@ import atexit
 
 class ULNStepper():
 	# Initliaze the ULN Driver stepper motor
-	def __init__(in1=18, in2=27, in3=22, in4=23, direction=2):
+	def __init__(self, in1=18, in2=27, in3=22, in4=23, direction=2):
 
 		# Initialize GPIO mode to use GPIO pin numbers
 		try:
@@ -32,24 +32,30 @@ class ULNStepper():
 		       		[0,0,1,1],
 		       		[0,0,0,1],
 		       		[1,0,0,1]]
-		self.StepCount = len(Seq)-1
+		self.StepCount = len(self.Seq)-1
 		self.StepDir = direction
 
-		self.StepCount = 0
+		self.StepCounter = 0
+
+        def __del__(self):
+                for pin in self.StepPins:
+                    GPIO.output(pin, False)
+                GPIO.cleanup()
+
 
 	def takeOneStep(self):
 		for pin in range(0, 4):
 		    xpin = self.StepPins[pin]
-		    if self.Seq[StepCounter][pin]!=0:
+		    if self.Seq[self.StepCounter][pin]!=0:
 		      GPIO.output(xpin, True)
 		    else:
 		      GPIO.output(xpin, False)
 
 		self.StepCounter += self.StepDir
-		if (StepCounter>=StepCount):
-		    StepCounter = 0
-		if (StepCounter<0):
-		    StepCounter = StepCount
+		if (self.StepCounter >= self.StepCount):
+		    self.StepCounter = 0
+		if (self.StepCounter < 0):
+		    self.StepCounter = self.StepCount
 
 		# From experiements the ideal time for sleeping is twice the amount of time taken for one step.
 		time.sleep(0.0025)
