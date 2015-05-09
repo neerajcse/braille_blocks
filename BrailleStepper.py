@@ -30,7 +30,7 @@ class BrailleStepper():
 		stesPerRev=4076,
 		onPort=1,
 		atI2CAddres=0x60,
-		debug=True):
+		debug=False):
 
 		# register destruction steps
 		atexit.register(self.turnOffMotors)
