@@ -4,15 +4,20 @@ from CharacterSets import EnglishCharacterSet
 import sys
 import time
 import threading
+import traceback
 
 
 def changeStepperState(stepperMotor, toChar, charSet, side):
+	tb=""
 	try:
 		print("Changing stepper motor state to " + toChar)
 		toState = charSet.getConfig(side, toChar)
 		stepperMotor.goToState(toState)
-	except:
-		print("Oops something weird happened." + sys.last_value)
+	except Exception, e:
+		tb=traceback.format_exc()
+		print("Oops something weird happened. %s" % e)
+	finally:
+		print tb
 
 
 wheel = BrailleWheel()

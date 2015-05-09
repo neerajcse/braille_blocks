@@ -17,12 +17,12 @@ def turnOffMotors():
 
 atexit.register(turnOffMotors)
 
-myStepper = mh.getStepper(4076, 2)  	# 200 steps/rev, motor port #1
+myStepper = mh.getStepper(4076, 1)  	# 200 steps/rev, motor port #1
 myStepper.setSpeed(15)  		# 30 RPM
 
 
 print("Single coil steps")
-myStepper.step(509, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
+myStepper.step(7*255, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
 #myStepper.step(100, Adafruit_MotorHAT.BACKWARD, Adafruit_MotorHAT.SINGLE)
 
 #print("Double coil steps")

@@ -45,11 +45,11 @@ class BrailleStepper():
 			self.stepper.setSpeed(15)
 			
 		# motor related config
-		self.STEPS_FOR_45_DEGREES = 509.5
+		self.STEPS_FOR_45_DEGREES = 255
 		
 		# state related config (the state of where the motor is currently)
 		self.leftOverFromLastStep = 0
-		self.state = MotorStates.NO_PINS_000
+		self.state = MotorStates.ONE_PIN_100
 
 		# the configuration of the braille wheel that is connected to the motor.
 		self.config = brailleWheel.CONFIGURATION
@@ -74,12 +74,13 @@ class BrailleStepper():
 		stepsToTake = stepsToTake - self.leftOverFromLastStep
 		print("BrailleStepper: Taking {0} 45 degree state changes equalling {1} steps taken".format(indexDiff, stepsToTake))
 		if not self.debug:
-			self.stepper.step(stepsToTake, Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
+			self.stepper.step(int(stepsToTake), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
 		
 
 	def turnOffMotors(self):
 		if not self.debug:
-			for i in range(1,5):
-				self.motorHAT.getMotor(i).run(Adafruit_MotorHAT.RELEASE)
+			#for i in range(1,5):
+			#	self.motorHAT.getMotor(i).run(Adafruit_MotorHAT.RELEASE)
+			print("Turning off")
 		else:
 			print("Turning off motors")
