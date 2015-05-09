@@ -21,9 +21,11 @@ def changeStepperState(stepperMotor, toChar, charSet, side):
 
 
 wheel = BrailleWheel()
-leftStepper = BrailleStepper(brailleWheel=wheel)
+leftStepper = BrailleStepper(brailleWheel=wheel, onPort=[18,23,24,25])
+rightStepper = BrailleStepper(brailleWheel=wheel, onPort=[4,17,27,22])
 
 left_motor_thread = threading.Thread()
+right_motor_thread = threading.Thread()
 EN_charSet = EnglishCharacterSet()
 
 
@@ -35,4 +37,7 @@ while(True):
 		if not left_motor_thread.isAlive():
 			left_motor_thread = threading.Thread(target=changeStepperState, args=(leftStepper, str(user_command), EN_charSet, 0,))
 			left_motor_thread.start()
+		if not right_motor_thread.isAlive():
+			right_motor_thread = threading.Thread(target=changeStepperState, args=(rightStepper, str(user_command), EN_charSet, 1))
+			right_motor_thread.start()
 	time.sleep(1)
