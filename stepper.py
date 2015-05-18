@@ -1,25 +1,6 @@
 #!/usr/bin/python
-#--------------------------------------
-#    ___  ___  _ ____          
-#   / _ \/ _ \(_) __/__  __ __ 
-#  / , _/ ___/ /\ \/ _ \/ // / 
-# /_/|_/_/  /_/___/ .__/\_, /  
-#                /_/   /___/   
-#
-#    Stepper Motor Test
-#
-# A simple script to control
-# a stepper motor.
-#
-# Author : Matt Hawkins
-# Date   : 20/03/2015
-#
-# http://www.raspberrypi-spy.co.uk/
-#
-#--------------------------------------
 #!/usr/bin/env python
 
-# Import required libraries
 import sys
 import time
 import RPi.GPIO as GPIO
