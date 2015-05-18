@@ -1,4 +1,4 @@
-from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor, Adafruit_StepperMotor
+from ULNStepper import ULNStepper
 import atexit
 
 class MotorStates():
@@ -28,8 +28,7 @@ class BrailleStepper():
 	def __init__(self,
 		brailleWheel, 
 		stesPerRev=4076,
-		onPort=1,
-		atI2CAddres=0x60,
+		onPort=[18,27,22,23],
 		debug=False):
 
 		# register destruction steps
@@ -39,10 +38,8 @@ class BrailleStepper():
 
 		# initalize hardward only if its in production
 		if not debug:
-			# hardware related config
-			self.motorHAT = Adafruit_MotorHAT()
-			self.stepper = self.motorHAT.getStepper(stesPerRev, onPort)
-			self.stepper.setSpeed(15)
+			self.stepper = ULNStepper(in1=onPort[0], in2=onPort[1], in3=onPort[2], in4=onPort[4])
+			#self.stepper.setSpeed(15)
 			
 		# motor related config
 		self.STEPS_FOR_45_DEGREES = 255
@@ -74,13 +71,14 @@ class BrailleStepper():
 		stepsToTake = stepsToTake - self.leftOverFromLastStep
 		print("BrailleStepper: Taking {0} 45 degree state changes equalling {1} steps taken".format(indexDiff, stepsToTake))
 		if not self.debug:
-			self.stepper.step(int(stepsToTake), Adafruit_MotorHAT.FORWARD,  Adafruit_MotorHAT.SINGLE)
+			self.stepper.takeSteps(int(stepsToTake))
 		
 
 	def turnOffMotors(self):
 		if not self.debug:
 			#for i in range(1,5):
 			#	self.motorHAT.getMotor(i).run(Adafruit_MotorHAT.RELEASE)
+			del self.stepper
 			print("Turning off")
 		else:
 			print("Turning off motors")
