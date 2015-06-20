@@ -12,22 +12,18 @@ module dual_motor_mould() {
 		translate([-4, 0, 2.7]) motor_base();
 		translate([45.5, 0, 2.7]) motor_base();
     }
-	
-	
 }
 
-module motor_block(isLeft) {
-        
+module motor_block(isLeft) {   
         if(isLeft) {
-            translate([0, 0,  0]) motor_wall();
+            translate([-1.2, 0,  0]) motor_wall();
         } else {
-            translate([16, 0, 0]) motor_wall();
+            translate([17.2, 0, 0]) motor_wall();
         }
 
    		difference() {
         	cube([20 ,41, 15]);
-		}
-        
+		}   
 }
 
 module motor_wall() {
@@ -45,12 +41,12 @@ module motor_base() {
 }
 
 module screw_holes() {
-	translate([30,3,21]) rotate([0, 90, 0]) cylinder(h = 40, r=2, center = true, $fn=100);
-	translate([30,38,21]) rotate([0, 90, 0]) cylinder(h = 40, r=2, center = true, $fn=100);
+	translate([30,3,22.5]) rotate([0, 90, 0]) cylinder(h = 40, r=2, center = true, $fn=100);
+	translate([30,38,22.5]) rotate([0, 90, 0]) cylinder(h = 40, r=2, center = true, $fn=100);
 }
 
 module solenoid_hole() {
-	translate([base_length/2, base_width/2, 2]) cylinder(h = 6, r = 2, center = true, $fn=100);	
+	translate([base_length/2, base_width/2, 2]) cylinder(h = 6, r = 1.5, center = true, $fn=100);	
 }
 
 difference() {
@@ -60,4 +56,3 @@ difference() {
 		solenoid_hole();
 	}	
 }
-
