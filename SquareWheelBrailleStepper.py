@@ -11,9 +11,9 @@ class BrailleWheel():
 	CONFIGURATION = [
                         MotorStates.TWO_PIN_11,
                         MotorStates.ONE_PIN_01,
-						MotorStates.NO_PINS_00,
-						MotorStates.ONE_PIN_10,
-					]
+                        MotorStates.NO_PINS_00,
+                        MotorStates.ONE_PIN_10,
+                        ]
 
 
 class BrailleStepper():
@@ -37,7 +37,7 @@ class BrailleStepper():
 		self.STEPS_FOR_90_DEGREES = 511
 		
 		# state related config (the state of where the motor is currently)
-		self.state = MotorStates.ONE_PIN_11
+		self.state = MotorStates.ONE_PIN_10
 
 		# the configuration of the braille wheel that is connected to the motor.
 		self.config = brailleWheel.CONFIGURATION
