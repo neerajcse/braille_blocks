@@ -4,8 +4,12 @@ import atexit
 class HeadHorizontalCarriage():
     def __init__(self, port=13):
       self.port = port
+      try:
+        GPIO.setmode(GPIO.BCM)
+      catch e:
+        print "GPIO Mode already set"
       GPIO.setup(self.port, GPIO.OUT)
-      self.pwm = GPIO.PWM(13, 100)
+      self.pwm = GPIO.PWM(self.port, 100)
       pwm.start(0)
       self.state = 0
       # register destruction steps
