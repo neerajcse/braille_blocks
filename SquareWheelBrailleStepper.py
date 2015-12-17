@@ -34,10 +34,10 @@ class BrailleStepper():
 			#self.stepper.setSpeed(15)
 			
 		# motor related config
-		self.STEPS_FOR_90_DEGREES = 511
+		self.STEPS_FOR_90_DEGREES = 510
 		
 		# state related config (the state of where the motor is currently)
-		self.state = MotorStates.ONE_PIN_10
+		self.state = MotorStates.TWO_PIN_11
 
 		# the configuration of the braille wheel that is connected to the motor.
 		self.config = brailleWheel.CONFIGURATION
@@ -47,6 +47,8 @@ class BrailleStepper():
 		currentIndex = self.config.index(self.state)
 		goToIndex = self.config.index(toState)
 		indexDiff = goToIndex - currentIndex
+                if indexDiff < 0:
+                    indexDiff = 4 + indexDiff
 		
 		print("Current:{}, To: {}, Diff: {}".format(currentIndex, goToIndex, indexDiff))
 		
