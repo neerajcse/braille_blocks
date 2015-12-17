@@ -1,6 +1,7 @@
 from SquareWheelBrailleStepper import BrailleStepper, BrailleWheel
 from BinaryCharacterSet import BinaryCharacterSetMapper
 from BrailleUtils import BrailleEmbosser
+from HeadhHorizontalCarriage import HeadhHorizontalCarriage
 
 import sys
 import time
@@ -33,6 +34,7 @@ wheel = BrailleWheel()
 leftStepper = BrailleStepper(brailleWheel=wheel, onPort=[18,23,24,25])
 rightStepper = BrailleStepper(brailleWheel=wheel, onPort=[4,17,27,22])
 brailleEmbosser = BrailleEmbosser(pin=21)
+carriage = HeadhHorizontalCarriage(port=13)
 
 left_motor_thread = threading.Thread()
 right_motor_thread = threading.Thread()
@@ -53,4 +55,5 @@ while(True):
             right_motor_thread = threading.Thread(target=changeStepperState, args=(rightStepper, str(user_command), BINARY_charSet, 1, rightStepperReady,))
             right_motor_thread.start()
         punchBraille(leftStepperReady, rightStepperReady, brailleEmbosser)
+        carriage.goToNextStep()
     time.sleep(1)
