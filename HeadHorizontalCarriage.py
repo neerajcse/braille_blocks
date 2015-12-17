@@ -6,7 +6,7 @@ class HeadHorizontalCarriage():
       self.port = port
       try:
         GPIO.setmode(GPIO.BCM)
-      catch e:
+      except e:
         print "GPIO Mode already set"
       GPIO.setup(self.port, GPIO.OUT)
       self.pwm = GPIO.PWM(self.port, 100)
